@@ -3,8 +3,9 @@
 
 This is an end-to-end python project utilizing Dept Estimation using ZoeDepth
 
-## Usage/Exmaple
+## Usage/Example
 
+### CLI Example
 ```python
 usage: cli.py [-h] input_image output_image
 
@@ -17,6 +18,9 @@ positional arguments:
 options:
   -h, --help    show this help message and exit
 ```
+### API
+
+You can check the API documentation from [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)
 
   
 ## Run it in your computer

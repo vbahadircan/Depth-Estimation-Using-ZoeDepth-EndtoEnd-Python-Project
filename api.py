@@ -4,9 +4,10 @@ import uuid
 from fastapi import FastAPI, File, UploadFile
 
 from predictor import DepthEstimationModel
+from upload import upload_image_to_imgbb
 
 app = FastAPI()
-depth_estimator = DepthEstimationModel
+depth_estimator = DepthEstimationModel()
 
 ALLOWED_EXTENSIONS = {".jpg", ".jpeg", "png"}
 TEMP_FOLDER = "api_images"
@@ -23,13 +24,14 @@ async def predict(file: UploadFile = File(...)):
         filename_base = str(uuid.uuid4())
         filename = filename_base + file_ext
         destination_path = os.path.join(TEMP_FOLDER, filename)
-        output_path = os.path.join(
-            TEMP_FOLDER, "output_" + filename_base + ".png")
+        output_path = os.path.join(TEMP_FOLDER, "output" + filename_base + ".png")
 
         with open(destination_path, "wb") as image_data:
             image_data.write(file.file.read())
 
+
         depth_estimator.calculate_depth_map(destination_path, output_path)
-        return {'OK': 'Image has been saved.'}
+        response = upload_image_to_imgbb(output_path)
+        return response
     except Exception as e:
         return {"error": str(e)}

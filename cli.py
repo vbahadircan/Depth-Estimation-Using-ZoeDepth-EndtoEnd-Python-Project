@@ -10,7 +10,7 @@ def main():
     args = parser.parse_args()
 
     model = DepthEstimationModel()
-    result = model.calculate_depth_mapargs(args.input_image, args.output_image)
+    result = model.calculate_depth_map(args.input_image, args.output_image)
     print(result)
 
 
